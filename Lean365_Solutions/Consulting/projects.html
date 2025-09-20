@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Projects | Lean365 Consulting</title>
+    <meta name="description" content="Internal project management dashboard for active Lean365 consulting projects and strategic transformation initiatives.">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
+    <style>
+        /* Projects Dashboard Neutral Styling */
+        .projects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        .projects-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .projects-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+        
+        .projects-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 2px;
+            background: #6b7280;
+            margin: 1rem auto;
+        }
+        
+        .projects-subtitle {
+            color: #6b7280;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .project-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: #d1d5db;
+        }
+        
+        .project-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.25rem;
+        }
+        
+        .project-client {
+            font-size: 0.95rem;
+            color: #6b7280;
+            font-weight: 400;
+        }
+        
+        .project-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        
+        .status-active { background: #10b981; }
+        .status-planning { background: #f59e0b; }
+        .status-review { background: #3b82f6; }
+        .status-completed { background: #6b7280; }
+        
+        .status-text {
+            font-size: 0.875rem;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .project-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .meta-label {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+            font-weight: 500;
+        }
+        
+        .meta-value {
+            font-size: 0.875rem;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .team-members {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .team-member {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        .progress-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-label {
+            font-size: 0.875rem;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .progress-percentage {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #f3f4f6;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #10b981;
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+        
+        .project-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        .action-link {
+            font-size: 0.875rem;
+            color: #6b7280;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        
+        .action-link:hover {
+            color: #374151;
+            border-color: #d1d5db;
+            background: #f9fafb;
+        }
+        
+        .action-primary {
+            background: #f8fafc;
+            color: #1e40af;
+            border-color: #dbeafe;
+        }
+        
+        .action-primary:hover {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .project-card {
+                padding: 1.5rem;
+            }
+            
+            .projects-title {
+                font-size: 2rem;
+            }
+            
+            .project-meta {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .project-actions {
+                flex-direction: column;
+            }
+        }
+        
+        /* Back to top navigation */
+        .back-nav {
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .back-link {
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            color: #374151;
+        }
+        
+        /* Methodology Button Styling */
+        .methodology-button {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #475569;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        
+        .methodology-button:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #334155;
+        }
+        
+        /* Sidebar Panel Styling */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .sidebar-panel {
+            position: fixed;
+            top: 0;
+            right: -600px;
+            width: 600px;
+            height: 100%;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+        
+        .sidebar-panel.active {
+            right: 0;
+        }
+        
+        .sidebar-header {
+            padding: 2rem 2rem 1rem 2rem;
+            border-bottom: 1px solid #e5e7eb;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+        }
+        
+        .sidebar-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sidebar-subtitle {
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        .sidebar-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #6b7280;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-close:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .sidebar-content {
+            padding: 0 2rem 2rem 2rem;
+        }
+        
+        /* Timeline Styling */
+        .timeline-container {
+            margin-top: 1.5rem;
+        }
+        
+        .phase-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+        
+        .phase-item:hover {
+            border-color: #d1d5db;
+        }
+        
+        .phase-header {
+            padding: 1.5rem;
+            background: #f9fafb;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .phase-header:hover {
+            background: #f3f4f6;
+        }
+        
+        .phase-title {
+            font-weight: 600;
+            color: #111827;
+            font-size: 1rem;
+        }
+        
+        .phase-timeline {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-top: 0.25rem;
+        }
+        
+        .phase-toggle {
+            font-size: 1.25rem;
+            color: #6b7280;
+            transition: transform 0.2s ease;
+        }
+        
+        .phase-item.expanded .phase-toggle {
+            transform: rotate(180deg);
+        }
+        
+        .phase-content {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+        }
+        
+        .phase-item.expanded .phase-content {
+            display: block;
+        }
+        
+        .activities-section, .deliverables-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .activities-section:last-child, .deliverables-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+        
+        .activity-list, .deliverable-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .activity-item, .deliverable-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3f4f6;
+            font-size: 0.875rem;
+            color: #4b5563;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .activity-item:last-child, .deliverable-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon, .deliverable-icon {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            margin-top: 0.5rem;
+            flex-shrink: 0;
+        }
+        
+        .deliverable-icon {
+            background: #3b82f6;
+        }
+        
+        /* Responsive sidebar */
+        @media (max-width: 768px) {
+            .sidebar-panel {
+                width: 100%;
+                right: -100%;
+            }
+        }
+        
+        /* Project Card Editing Styles */
+        .project-card.editing {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+        
+        .project-card.editing::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #3b82f6;
+        }
+        
+        .edit-form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .edit-label {
+            display: block;
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+        
+        .edit-input, .edit-select, .edit-textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-family: inherit;
+            background: white;
+            transition: border-color 0.2s ease;
+        }
+        
+        .edit-input:focus, .edit-select:focus, .edit-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .edit-input.title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+        }
+        
+        .edit-input.client {
+            font-size: 0.95rem;
+            color: #6b7280;
+        }
+        
+        .edit-textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+        
+        .team-members-edit {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-member-edit {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .remove-member {
+            background: none;
+            border: none;
+            color: #6b7280;
+            cursor: pointer;
+            padding: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .remove-member:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+        
+        .add-member-input {
+            flex: 1;
+            min-width: 120px;
+            padding: 0.25rem 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            font-size: 0.75rem;
+        }
+        
+        .progress-edit {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .progress-slider {
+            flex: 1;
+            height: 6px;
+            background: #f3f4f6;
+            border-radius: 3px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .progress-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #10b981;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        .progress-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: #10b981;
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .edit-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .edit-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid;
+        }
+        
+        .edit-btn-save {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .edit-btn-save:hover {
+            background: #2563eb;
+            border-color: #2563eb;
+        }
+        
+        .edit-btn-cancel {
+            background: white;
+            color: #6b7280;
+            border-color: #d1d5db;
+        }
+        
+        .edit-btn-cancel:hover {
+            background: #f9fafb;
+            color: #374151;
+            border-color: #9ca3af;
+        }
+        
+        .edit-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #3b82f6;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        
+        /* Edit Button Styles */
+        .edit-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #64748b;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            z-index: 5;
+        }
+        
+        .edit-button:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            color: #475569;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .edit-button:active {
+            transform: translateY(0);
+        }
+        
+        .project-card.editing .edit-button {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <img src="../assets/images/logo.svg" alt="Lean365 Logo">
+            </div>
+            <nav>
+                <ul class="nav">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../FSF/FSF_Framework.html">Framework</a></li>
+                    <li><a href="../Lean365_Platform/platform.html">Platform</a></li>
+                    <li><a href="../FSF/FSF_Casestudies.html">Results</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="../index.html#consultation" class="btn btn-primary">Schedule Consultation</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="projects-container">
+        <div class="back-nav">
+            <a href="../index.html#services" class="back-link">
+                ← Back to Consulting Services
+            </a>
+        </div>
+        
+        <div class="projects-header">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h1 class="projects-title" style="margin-bottom: 0;">Active Projects</h1>
+                <button id="methodology-btn" class="methodology-button">Our Approach</button>
+            </div>
+            <p class="projects-subtitle">Internal project management dashboard for ongoing client transformations</p>
+        </div>
+        
+        <div class="projects-grid">
+            <!-- Onc_UMC Project -->
+            <div class="project-card" data-project-id="onc_umc">
+                <button class="edit-button" title="Edit Project">✏️</button>
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">Oncology Referral Process Optimization</h3>
+                        <p class="project-client">University Medical Center - Oncology</p>
+                    </div>
+                </div>
+                
+                <div class="project-status">
+                    <div class="status-dot status-active"></div>
+                    <span class="status-text">Planning- Diagnostic Assessment</span>
+                </div>
+                
+                <div class="project-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Days Active</span>
+                        <span class="meta-value">5 days</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Current Phase</span>
+                        <span class="meta-value">Diagnostic Assessment</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Team Members</span>
+                        <div class="team-members">
+                            <span class="team-member">S. Boinpally</span>
+                            <span class="team-member">Dr. Rangaraj</span>
+                            <span class="team-member">Lean365</span>
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Started</span>
+                        <span class="meta-value">Sep 20, 2025</span>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-label">Overall Progress</span>
+                        <span class="progress-percentage">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+                
+                <div class="project-actions">
+                    <a href="../Consulting/Projects/Onc_UMC/" class="action-link action-primary">View Project Files</a>
+                    <a href="#" class="action-link">Update Status</a>
+                </div>
+            </div>
+            
+            <!-- Regional Health System Project -->
+            <div class="project-card" data-project-id="regional_health">
+                <button class="edit-button" title="Edit Project">✏️</button>
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">Regional Health System Strategy Deployment</h3>
+                        <p class="project-client">Central Texas Health Network</p>
+                    </div>
+                </div>
+                
+                <div class="project-status">
+                    <div class="status-dot status-planning"></div>
+                    <span class="status-text">Planning - Assessment Phase</span>
+                </div>
+                
+                <div class="project-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Days Active</span>
+                        <span class="meta-value">12 days</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Current Phase</span>
+                        <span class="meta-value">Contextual Readiness</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Team Members</span>
+                        <div class="team-members">
+                            <span class="team-member">S. Boinpally</span>
+                            <span class="team-member">A. Liebig</span>
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Started</span>
+                        <span class="meta-value">Aug 15, 2025</span>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-label">Overall Progress</span>
+                        <span class="progress-percentage">5%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 5%;"></div>
+                    </div>
+                </div>
+                
+                <div class="project-actions">
+                    <a href="#" class="action-link action-primary">View Project Files</a>
+                    <a href="#" class="action-link">Schedule Review</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="logo mb-md">
+                        <img src="../assets/images/logo.svg" alt="Lean365 Logo" style="height: 30px; margin-right: 0.5rem;">
+                        <span style="font-size: 1.2rem; font-weight: 700; color: white;">Lean365</span>
+                    </div>
+                    <p>Transforming strategic intent into organizational instinct through proven methodologies and cutting-edge technology.</p>
+                </div>
+                
+                <div>
+                    <h4>Internal Tools</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="projects.html">Active Projects</a></li>
+                        <li><a href="resources.html">Client Resources</a></li>
+                        <li><a href="../index.html#consultation">Schedule Consultation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4>Contact</h4>
+                    <ul style="list-style: none;">
+                        <li>📧 info@lean365.ai</li>
+                        <li>🌐 www.lean365.ai</li>
+                        <li>📞 833-532-6365</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Lean365. All rights reserved. | Your partner in strategic transformation.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Methodology Sidebar -->
+    <div class="sidebar-overlay" id="sidebar-overlay">
+        <div class="sidebar-panel" id="sidebar-panel">
+            <div class="sidebar-header">
+                <div>
+                    <h2 class="sidebar-title">Our Approach</h2>
+                    <p class="sidebar-subtitle">6-Phase Healthcare Process Improvement Methodology</p>
+                </div>
+                <button class="sidebar-close" id="sidebar-close">&times;</button>
+            </div>
+            
+            <div class="sidebar-content">
+                <div class="timeline-container">
+                    <!-- Phase 1 -->
+                    <div class="phase-item" data-phase="1">
+                        <div class="phase-header">
+                            <div>
+                                <div class="phase-title">Phase 1: Kickoff & Diagnostic Assessment</div>
+                                <div class="phase-timeline">Month 1</div>
+                            </div>
+                            <span class="phase-toggle">▼</span>
+                        </div>
+                        <div class="phase-content">
+                            <div class="activities-section">
+                                <h4 class="section-title">Key Activities</h4>
+                                <ul class="activity-list">
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Conduct project kickoff with leadership and stakeholders</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Map current process using LeanFlow methodology</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Collect baseline performance data and metrics</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Identify initial pain points and quick wins</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="deliverables-section">
+                                <h4 class="section-title">Key Deliverables</h4>
+                                <ul class="deliverable-list">
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Project Charter & Scope Document</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Current-state process map</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Baseline metrics dashboard</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Stakeholder analysis</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 2 -->
+                    <div class="phase-item" data-phase="2">
+                        <div class="phase-header">
+                            <div>
+                                <div class="phase-title">Phase 2: Data Analysis & Root Cause Identification</div>
+                                <div class="phase-timeline">Month 1-2</div>
+                            </div>
+                            <span class="phase-toggle">▼</span>
+                        </div>
+                        <div class="phase-content">
+                            <div class="activities-section">
+                                <h4 class="section-title">Key Activities</h4>
+                                <ul class="activity-list">
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Analyze performance data and quantify gaps</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Calculate current gaps and business impact</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Conduct staff interviews and workshops</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Use PDCA framework for root cause analysis</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="deliverables-section">
+                                <h4 class="section-title">Key Deliverables</h4>
+                                <ul class="deliverable-list">
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Performance Gap Diagnostic Report</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Prioritized improvement opportunities</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Baseline Balanced Scorecard setup</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 3 -->
+                    <div class="phase-item" data-phase="3">
+                        <div class="phase-header">
+                            <div>
+                                <div class="phase-title">Phase 3: Improvement Planning & Design</div>
+                                <div class="phase-timeline">Month 2</div>
+                            </div>
+                            <span class="phase-toggle">▼</span>
+                        </div>
+                        <div class="phase-content">
+                            <div class="activities-section">
+                                <h4 class="section-title">Key Activities</h4>
+                                <ul class="activity-list">
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Solution brainstorming workshops with stakeholders</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Design future-state process flows</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Prioritize interventions by impact and effort</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Develop detailed implementation plan</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="deliverables-section">
+                                <h4 class="section-title">Key Deliverables</h4>
+                                <ul class="deliverable-list">
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Future-state process map</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Implementation roadmap</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Updated SOPs in LeanFlow</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Training materials and communication plan</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 4 -->
+                    <div class="phase-item" data-phase="4">
+                        <div class="phase-header">
+                            <div>
+                                <div class="phase-title">Phase 4: Implementation of Interventions</div>
+                                <div class="phase-timeline">Months 3-4</div>
+                            </div>
+                            <span class="phase-toggle">▼</span>
+                        </div>
+                        <div class="phase-content">
+                            <div class="activities-section">
+                                <h4 class="section-title">Key Activities</h4>
+                                <ul class="activity-list">
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Execute improvement interventions</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Train staff on new processes and procedures</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Initiate daily huddles using Huddle Boards</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Begin Leadership Rounding practices</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Track progress via Balanced Scorecard</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="deliverables-section">
+                                <h4 class="section-title">Key Deliverables</h4>
+                                <ul class="deliverable-list">
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>New processes deployed and operational</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Staff trained and engaged</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Lean365 tools active and functioning</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Initial improvement data captured</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 5 -->
+                    <div class="phase-item" data-phase="5">
+                        <div class="phase-header">
+                            <div>
+                                <div class="phase-title">Phase 5: Performance Monitoring & Adjustment</div>
+                                <div class="phase-timeline">Month 5</div>
+                            </div>
+                            <span class="phase-toggle">▼</span>
+                        </div>
+                        <div class="phase-content">
+                            <div class="activities-section">
+                                <h4 class="section-title">Key Activities</h4>
+                                <ul class="activity-list">
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Monitor performance via Balanced Scorecard</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Continue daily huddles and team engagement</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Apply PDCA problem-solving for emerging issues</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Conduct bi-weekly progress reviews</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="deliverables-section">
+                                <h4 class="section-title">Key Deliverables</h4>
+                                <ul class="deliverable-list">
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Monthly performance reports</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>PDCA adjustment logs</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Coaching sessions completed</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Phase 6 -->
+                    <div class="phase-item" data-phase="6">
+                        <div class="phase-header">
+                            <div>
+                                <div class="phase-title">Phase 6: Sustainment & Project Closure</div>
+                                <div class="phase-timeline">Month 6</div>
+                            </div>
+                            <span class="phase-toggle">▼</span>
+                        </div>
+                        <div class="phase-content">
+                            <div class="activities-section">
+                                <h4 class="section-title">Key Activities</h4>
+                                <ul class="activity-list">
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Develop formal sustainability plan</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Finalize all process documentation in LeanFlow</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Transition Balanced Scorecard ownership to client</div>
+                                    </li>
+                                    <li class="activity-item">
+                                        <div class="activity-icon"></div>
+                                        <div>Project close-out presentation to leadership</div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="deliverables-section">
+                                <h4 class="section-title">Key Deliverables</h4>
+                                <ul class="deliverable-list">
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Sustainability & governance plan</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Final project outcomes report</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Lean365 platform handoff</div>
+                                    </li>
+                                    <li class="deliverable-item">
+                                        <div class="deliverable-icon"></div>
+                                        <div>Celebration of results and lessons learned</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+        // Methodology Sidebar Functionality
+        const methodologyBtn = document.getElementById('methodology-btn');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const sidebarPanel = document.getElementById('sidebar-panel');
+        const sidebarClose = document.getElementById('sidebar-close');
+        const phaseItems = document.querySelectorAll('.phase-item');
+
+        // Open sidebar
+        methodologyBtn.addEventListener('click', function() {
+            sidebarOverlay.classList.add('active');
+            sidebarPanel.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Close sidebar
+        function closeSidebar() {
+            sidebarOverlay.classList.remove('active');
+            sidebarPanel.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        sidebarClose.addEventListener('click', closeSidebar);
+        sidebarOverlay.addEventListener('click', function(e) {
+            if (e.target === sidebarOverlay) {
+                closeSidebar();
+            }
+        });
+
+        // Escape key to close
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && sidebarOverlay.classList.contains('active')) {
+                closeSidebar();
+            }
+        });
+
+        // Phase toggle functionality
+        phaseItems.forEach(function(phaseItem) {
+            const phaseHeader = phaseItem.querySelector('.phase-header');
+            
+            phaseHeader.addEventListener('click', function() {
+                phaseItem.classList.toggle('expanded');
+            });
+        });
+
+        // Project Card Editing Functionality with Persistence
+        const projectCards = document.querySelectorAll('.project-card');
+        
+        // Load saved data on page load
+        function loadSavedData() {
+            projectCards.forEach(function(card) {
+                const projectId = card.getAttribute('data-project-id');
+                const savedData = localStorage.getItem(`project_${projectId}`);
+                
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    updateCardDisplay(card, data);
+                }
+            });
+        }
+        
+        // Save project data to localStorage
+        function saveProjectData(projectId, data) {
+            localStorage.setItem(`project_${projectId}`, JSON.stringify(data));
+        }
+        
+        // Update card display with data
+        function updateCardDisplay(card, data) {
+            const statusClasses = {
+                'active': 'status-active',
+                'planning': 'status-planning',
+                'review': 'status-review',
+                'completed': 'status-completed'
+            };
+            
+            card.innerHTML = `
+                <button class="edit-button" title="Edit Project">✏️</button>
+                <div class="project-header">
+                    <div>
+                        <h3 class="project-title">${data.title}</h3>
+                        <p class="project-client">${data.client}</p>
+                    </div>
+                </div>
+                
+                <div class="project-status">
+                    <div class="status-dot ${statusClasses[data.status]}"></div>
+                    <span class="status-text">${data.statusText}</span>
+                </div>
+                
+                <div class="project-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Days Active</span>
+                        <span class="meta-value">${data.daysActive}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Current Phase</span>
+                        <span class="meta-value">${data.currentPhase}</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Team Members</span>
+                        <div class="team-members">
+                            ${data.teamMembers.map(member => `<span class="team-member">${member}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Started</span>
+                        <span class="meta-value">${data.startDate}</span>
+                    </div>
+                </div>
+                
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <span class="progress-label">Overall Progress</span>
+                        <span class="progress-percentage">${data.progress}%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${data.progress}%;"></div>
+                    </div>
+                </div>
+                
+                <div class="project-actions">
+                    <a href="#" class="action-link action-primary">View Project Files</a>
+                    <a href="#" class="action-link">Update Status</a>
+                </div>
+            `;
+            
+            // Re-attach edit button event listener
+            const editButton = card.querySelector('.edit-button');
+            editButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                enterEditMode(card);
+            });
+        }
+        
+        // Define global edit functions
+        function enterEditMode(card) {
+            // Add editing class for visual feedback
+            card.classList.add('editing');
+            
+            // Get current values
+            const title = card.querySelector('.project-title').textContent;
+            const client = card.querySelector('.project-client').textContent;
+            const statusText = card.querySelector('.status-text').textContent;
+            const daysActive = card.querySelector('.meta-value').textContent;
+            const currentPhase = card.querySelectorAll('.meta-value')[1].textContent;
+            const startDate = card.querySelectorAll('.meta-value')[2].textContent;
+            const progressPercent = card.querySelector('.progress-percentage').textContent.replace('%', '');
+            const teamMembers = Array.from(card.querySelectorAll('.team-member')).map(tm => tm.textContent);
+            
+            // Get status class
+            const statusDot = card.querySelector('.status-dot');
+            let currentStatus = 'active';
+            if (statusDot.classList.contains('status-planning')) currentStatus = 'planning';
+            else if (statusDot.classList.contains('status-review')) currentStatus = 'review';
+            else if (statusDot.classList.contains('status-completed')) currentStatus = 'completed';
+            
+            // Create edit form
+            card.innerHTML = `
+                <div class="edit-indicator">Editing</div>
+                <div class="edit-form-group">
+                    <label class="edit-label">Project Title</label>
+                    <input type="text" class="edit-input title" value="${title}" data-field="title">
+                </div>
+                
+                <div class="edit-form-group">
+                    <label class="edit-label">Client</label>
+                    <input type="text" class="edit-input client" value="${client}" data-field="client">
+                </div>
+                
+                <div class="edit-form-group">
+                    <label class="edit-label">Status</label>
+                    <select class="edit-select" data-field="status">
+                        <option value="active" ${currentStatus === 'active' ? 'selected' : ''}>Active</option>
+                        <option value="planning" ${currentStatus === 'planning' ? 'selected' : ''}>Planning</option>
+                        <option value="review" ${currentStatus === 'review' ? 'selected' : ''}>Review</option>
+                        <option value="completed" ${currentStatus === 'completed' ? 'selected' : ''}>Completed</option>
+                    </select>
+                </div>
+                
+                <div class="edit-form-group">
+                    <label class="edit-label">Status Description</label>
+                    <input type="text" class="edit-input" value="${statusText}" data-field="statusText">
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="edit-form-group">
+                        <label class="edit-label">Days Active</label>
+                        <input type="text" class="edit-input" value="${daysActive}" data-field="daysActive">
+                    </div>
+                    
+                    <div class="edit-form-group">
+                        <label class="edit-label">Start Date</label>
+                        <input type="text" class="edit-input" value="${startDate}" data-field="startDate">
+                    </div>
+                </div>
+                
+                <div class="edit-form-group">
+                    <label class="edit-label">Current Phase</label>
+                    <select class="edit-select" data-field="currentPhase">
+                        <option value="Contextual Readiness" ${currentPhase === 'Contextual Readiness' ? 'selected' : ''}>Contextual Readiness</option>
+                        <option value="Diagnostic Assessment" ${currentPhase === 'Diagnostic Assessment' ? 'selected' : ''}>Diagnostic Assessment</option>
+                        <option value="Root Cause Analysis" ${currentPhase === 'Root Cause Analysis' ? 'selected' : ''}>Root Cause Analysis</option>
+                        <option value="Improvement Design" ${currentPhase === 'Improvement Design' ? 'selected' : ''}>Improvement Design</option>
+                        <option value="Strategy Implementation" ${currentPhase === 'Strategy Implementation' ? 'selected' : ''}>Strategy Implementation</option>
+                        <option value="Daily Practice Engine" ${currentPhase === 'Daily Practice Engine' ? 'selected' : ''}>Daily Practice Engine</option>
+                        <option value="Leadership Engagement" ${currentPhase === 'Leadership Engagement' ? 'selected' : ''}>Leadership Engagement</option>
+                        <option value="Sustainment" ${currentPhase === 'Sustainment' ? 'selected' : ''}>Sustainment</option>
+                    </select>
+                </div>
+                
+                <div class="edit-form-group">
+                    <label class="edit-label">Team Members</label>
+                    <div class="team-members-edit" data-field="teamMembers">
+                        ${teamMembers.map(member => `
+                            <div class="team-member-edit">
+                                <span>${member}</span>
+                                <button class="remove-member" onclick="this.parentElement.remove()">×</button>
+                            </div>
+                        `).join('')}
+                        <input type="text" class="add-member-input" placeholder="Add team member" onkeypress="if(event.key==='Enter'){addTeamMember(this)}">
+                    </div>
+                </div>
+                
+                <div class="edit-form-group">
+                    <label class="edit-label">Progress (<span class="progress-display">${progressPercent}%</span>)</label>
+                    <div class="progress-edit">
+                        <input type="range" class="progress-slider" min="0" max="100" value="${progressPercent}" data-field="progress" oninput="this.parentElement.parentElement.querySelector('.progress-display').textContent = this.value + '%'">
+                    </div>
+                </div>
+                
+                <div class="edit-actions">
+                    <button class="edit-btn edit-btn-save" onclick="saveChanges(this.closest('.project-card'))">Save Changes</button>
+                    <button class="edit-btn edit-btn-cancel" onclick="cancelEdit(this.closest('.project-card'))">Cancel</button>
+                </div>
+            `;
+        }
+        
+        function saveChanges(card) {
+            // Get all form values
+            const title = card.querySelector('[data-field="title"]').value;
+            const client = card.querySelector('[data-field="client"]').value;
+            const status = card.querySelector('[data-field="status"]').value;
+            const statusText = card.querySelector('[data-field="statusText"]').value;
+            const daysActive = card.querySelector('[data-field="daysActive"]').value;
+            const currentPhase = card.querySelector('[data-field="currentPhase"]').value;
+            const startDate = card.querySelector('[data-field="startDate"]').value;
+            const progress = card.querySelector('[data-field="progress"]').value;
+            
+            // Get team members
+            const teamMemberElements = card.querySelectorAll('.team-member-edit span');
+            const teamMembers = Array.from(teamMemberElements).map(tm => tm.textContent);
+            
+            // Create data object
+            const projectData = {
+                title: title,
+                client: client,
+                status: status,
+                statusText: statusText,
+                daysActive: daysActive,
+                currentPhase: currentPhase,
+                startDate: startDate,
+                progress: progress,
+                teamMembers: teamMembers
+            };
+            
+            // Save to localStorage
+            const projectId = card.getAttribute('data-project-id');
+            saveProjectData(projectId, projectData);
+            
+            // Update the card display
+            updateCardDisplay(card, projectData);
+            
+            card.classList.remove('editing');
+        }
+        
+        function cancelEdit(card) {
+            // Get current saved data or fall back to original
+            const projectId = card.getAttribute('data-project-id');
+            const savedData = localStorage.getItem(`project_${projectId}`);
+            
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                updateCardDisplay(card, data);
+            } else {
+                // Reload original content and restore edit button
+                location.reload();
+            }
+            
+            card.classList.remove('editing');
+        }
+        
+        // Add event listeners to edit buttons
+        projectCards.forEach(function(card) {
+            const editButton = card.querySelector('.edit-button');
+            if (editButton) {
+                editButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    enterEditMode(card);
+                });
+            }
+        });
+        
+        // Load saved data when page loads
+        loadSavedData();
+        
+        // Global function for adding team members
+        window.addTeamMember = function(input) {
+            const memberName = input.value.trim();
+            if (memberName) {
+                const memberDiv = document.createElement('div');
+                memberDiv.className = 'team-member-edit';
+                memberDiv.innerHTML = `
+                    <span>${memberName}</span>
+                    <button class="remove-member" onclick="this.parentElement.remove()">×</button>
+                `;
+                input.parentElement.insertBefore(memberDiv, input);
+                input.value = '';
+            }
+        };
+    </script>
+</body>
+</html>
