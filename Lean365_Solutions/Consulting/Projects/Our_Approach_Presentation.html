@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lean365 Our Approach - 6-Phase Methodology</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .presentation-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .slide {
+            width: 1280px;
+            height: 720px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slide.active {
+            display: flex;
+        }
+        
+        .slide-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .slide-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        
+        .slide-subtitle {
+            font-size: 22px;
+            color: #64748b;
+            font-weight: 400;
+        }
+        
+        .lean365-logo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+        
+        .lean365-logo img {
+            height: 30px;
+        }
+        
+        /* Phase Overview Grid */
+        .phases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            flex: 1;
+            margin-top: 30px;
+        }
+        
+        .phase-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #2557a7;
+        }
+        
+        .phase-number {
+            width: 50px;
+            height: 50px;
+            background: #2557a7;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .phase-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .phase-duration {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        /* Timeline Visualization */
+        .timeline-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+        }
+        
+        .timeline-line {
+            height: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            position: relative;
+            margin: 60px 0;
+        }
+        
+        .timeline-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #2557a7 0%, #10b981 100%);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 2s ease;
+        }
+        
+        .timeline-phases {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: -30px;
+            left: 0;
+            right: 0;
+        }
+        
+        .timeline-phase {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: #e5e7eb;
+            border: 3px solid white;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            transition: all 0.5s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-dot.active {
+            background: #2557a7;
+        }
+        
+        .timeline-dot.completed {
+            background: #10b981;
+        }
+        
+        .timeline-label {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+            text-align: center;
+            max-width: 80px;
+        }
+        
+        /* Phase Detail Layout */
+        .phase-detail {
+            display: flex;
+            gap: 40px;
+            flex: 1;
+            margin-top: 20px;
+        }
+        
+        .phase-left {
+            flex: 1;
+        }
+        
+        .phase-right {
+            flex: 1;
+        }
+        
+        .phase-info {
+            background: linear-gradient(135deg, #2557a7 0%, #1a3f7a 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .phase-info h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .phase-info .duration {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+        
+        .phase-info .description {
+            font-size: 16px;
+            line-height: 1.5;
+            opacity: 0.95;
+        }
+        
+        .activities-section, .deliverables-section {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .activity-list, .deliverable-list {
+            list-style: none;
+        }
+        
+        .activity-list li, .deliverable-list li {
+            padding: 8px 0;
+            font-size: 14px;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .activity-list li::before {
+            content: "⚡";
+            font-size: 16px;
+        }
+        
+        .deliverable-list li::before {
+            content: "📋";
+            font-size: 16px;
+        }
+        
+        .tools-highlight {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .tools-highlight h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .tools-list {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+        
+        /* Navigation Controls */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 15px 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 1000;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn {
+            background: #2557a7;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+        
+        .nav-btn:hover:not(:disabled) {
+            background: #1a3f7a;
+            transform: scale(1.1);
+        }
+        
+        .nav-btn:disabled {
+            background: #64748b;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        
+        .slide-counter {
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .slide-dots {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: white;
+            transform: scale(1.3);
+        }
+        
+        .fullscreen-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(30, 41, 59, 0.9);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            z-index: 1000;
+        }
+        
+        .fullscreen-btn:hover {
+            background: rgba(30, 41, 59, 1);
+            transform: scale(1.1);
+        }
+        
+        .keyboard-hint {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            background: rgba(30, 41, 59, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .keyboard-hint.show {
+            opacity: 1;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            flex: 1;
+        }
+        
+        .summary-card {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .summary-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+        
+        .summary-card p {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+        
+        .summary-highlight {
+            background: linear-gradient(135deg, #2557a7 0%, #1a3f7a 100%);
+            color: white;
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .summary-highlight h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .summary-highlight p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+    </style>
+</head>
+<body>
+    <div class="keyboard-hint" id="keyboardHint">
+        Use ← → arrow keys or spacebar to navigate
+    </div>
+    
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶</button>
+    
+    <div class="presentation-container">
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active" id="slide-1">
+            <div class="lean365-logo">
+                <img src="../../assets/images/logo.svg" alt="Lean365">
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center;">
+                <h1 style="font-size: 64px; font-weight: 300; color: #1e293b; margin-bottom: 30px;">Our Approach</h1>
+                <p style="font-size: 28px; color: #64748b; margin-bottom: 50px; max-width: 800px;">A proven 6-phase methodology for sustainable organizational transformation</p>
+                <div style="background: linear-gradient(135deg, #2557a7 0%, #1a3f7a 100%); color: white; padding: 25px 40px; border-radius: 12px; font-size: 18px; font-weight: 500;">
+                    Strategy-to-Execution Excellence
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 2: 6-Phase Overview -->
+        <div class="slide" id="slide-2">
+            <div class="lean365-logo">
+                <img src="../../assets/images/logo.svg" alt="Lean365">
+            </div>
+            <div class="slide-header">
+                <h1 class="slide-title">6-Phase Methodology</h1>
+                <p class="slide-subtitle">Comprehensive approach over 6 months</p>
+            </div>
+            
+            <div class="phases-grid">
+                <div class="phase-card" onclick="goToSlide(3)">
+                    <div class="phase-number">1</div>
+                    <div class="phase-title">Kickoff & Diagnostic</div>
+                    <div class="phase-duration">Month 1</div>
+                </div>
+                <div class="phase-card" onclick="goToSlide(4)">
+                    <div class="phase-number">2</div>
+                    <div class="phase-title">Data Analysis & Root Cause</div>
+                    <div class="phase-duration">Month 1-2</div>
+                </div>
+                <div class="phase-card" onclick="goToSlide(5)">
+                    <div class="phase-number">3</div>
+                    <div class="phase-title">Improvement Planning</div>
+                    <div class="phase-duration">Month 2</div>
+                </div>
+                <div class="phase-card" onclick="goToSlide(6)">
+                    <div class="phase-number">4</div>
+                    <div class="phase-title">Implementation</div>
+                    <div class="phase-duration">Months 3-4</div>
+                </div>
+                <div class="phase-card" onclick="goToSlide(7)">
+                    <div class="phase-number">5</div>
+                    <div class="phase-title">Performance Monitoring</div>
+                    <div class="phase-duration">Month 5</div>
+                </div>
+                <div class="phase-card" onclick="goToSlide(8)">
+                    <div class="phase-number">6</div>
+                    <div class="phase-title">Sustainment & Closure</div>
+                    <div class="phase-duration">Month 6</div>
+                </div>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-line">
+                    <div class="timeline-progress" id="timelineProgress"></div>
+                </div>
+                <div class="timeline-phases">
+                    <div class="timeline-phase">
+                        <div class="timeline-dot active"></div>
+                        <div class="timeline-label">Start</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-label">Month 1</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-label">Month 2</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-label">Month 3</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-label">Month 4</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-label">Month 5</div>
+                    </div>
+                    <div class="timeline-phase">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-label">Complete</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Phase 1 - Kickoff & Diagnostic -->
+        <div class="slide" id="slide-3">
+            <div class="lean365-logo">
+                <img src="../../assets/images/logo.svg" alt="Lean365">
+            </div>
+            <div class="phase-detail">
+                <div class="phase-left">
+                    <div class="phase-info">
+                        <h2>Phase 1: Kickoff & Diagnostic</h2>
+                        <div class="duration">Month 1</div>
+                        <div class="description">Launch the project, align on goals, and understand current state through comprehensive assessment.</div>
+                    </div>
+                    <div class="activities-section">
+                        <div class="section-title">
+                            <span>Key Activities</span>
+                        </div>
+                        <ul class="activity-list">
+                            <li>Kickoff meeting with leadership</li>
+                            <li>Map current process using LeanFlow</li>
+                            <li>Collect baseline performance data</li>
+                            <li>Identify initial pain points/quick wins</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="phase-right">
+                    <div class="deliverables-section">
+                        <div class="section-title">
+                            <span>Key Deliverables</span>
+                        </div>
+                        <ul class="deliverable-list">
+                            <li>Project Charter & work plan</li>
+                            <li>Current-state process map</li>
+                            <li>Baseline metrics dashboard</li>
+                            <li>Stakeholder analysis</li>
+                        </ul>
+                    </div>
+                    <div class="tools-highlight">
+                        <h3>Lean365 Tools</h3>
+                        <div class="tools-list">LeanFlow for process mapping</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Phase 2 - Data Analysis & Root Cause -->
+        <div class="slide" id="slide-4">
+            <div class="lean365-logo">
+                <img src="../../assets/images/logo.svg" alt="Lean365">
+            </div>
+            <div class="phase-detail">
+                <div class="phase-left">
+                    <div class="phase-info">
+                        <h2>Phase 2: Data Analysis & Root Cause</h2>
+                        <div class="duration">Month 1-2</div>
+                        <div class="description">Quantify performance gaps and identify underlying causes through systematic analysis.</div>
+                    </div>
+                    <div class="activities-section">
+                        <div class="section-title">
+                            <span>Key Activities</span>
+                        </div>
+                        <ul class="activity-list">
+                            <li>Analyze performance data</li>
+                            <li>Calculate current gaps and impact</li>
+                            <li>Conduct staff interviews & workshops</li>
+                            <li>Use PDCA framework for root cause analysis</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="phase-right">
+                    <div class="deliverables-section">
+                        <div class="section-title">
+                            <span>Key Deliverables</span>
+                        </div>
+                        <ul class="deliverable-list">
+                            <li>Diagnostic report with findings</li>
+                            <li>Prioritized improvement opportunities</li>
+                            <li>Baseline Balanced Scorecard</li>
+                        </ul>
+                    </div>
+                    <div class="tools-highlight">
+                        <h3>Lean365 Tools</h3>
+                        <div class="tools-list">PDCA for root cause analysis<br>Balanced Scorecard setup</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Phase 3 - Improvement Planning -->
+        <div class="slide" id="slide-5">
+            <div class="lean365-logo">
+                <img src="../../assets/images/logo.svg" alt="Lean365">
+            </div>
+            <div class="phase-detail">
+                <div class="phase-left">
+                    <div class="phase-info">
+                        <h2>Phase 3: Improvement Planning</h2>
+                        <div class="duration">Month 2</div>
+                        <div class="description">Develop targeted solutions and future-state process designs with implementation roadmap.</div>
+                    </div>
+                    <div class="activities-section">
+                        <div class="section-title">
+                            <span>Key Activities</span>
+                        </div>
+                        <ul class="activity-list">
+                            <li>Solution brainstorming workshops</li>
+                            <li>Design future-state process</li>
+                            <li>Prioritize interventions by impact/effort</li>
+                            <li>Develop implementation plan</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="phase-right">
+                    <div class="deliverables-section">
+                        <div class="section-title">
+                            <span>Key Deliverables</span>
+                        </div>
+                        <ul class="deliverable-list">
+                            <li>Future-state process map</li>
+                            <li>Implementation roadmap</li>
+                            <li>Updated SOPs in LeanFlow</li>
+                            <li>Training materials</li>
+                        </ul>
+                    </div>
+                    <div class="tools-highlight">
+                        <h3>Lean365 Tools</h3>
+                        <div class="tools-list">LeanFlow for SOP updates<br>Implementation planning</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Phase 4 - Implementation -->
+        <div class="slide" id="slide-6">
+            <div class="lean365-logo">
+                <img src="../../assets/images/logo.svg" alt="Lean365">
+            </div>
+            <div class="phase-detail">
+                <div class="phase-left">
+                    <div class="phase-info">
+                        <h2>Phase 4: Implementation</h2>
+                        <div class="duration">Months 3-4</div>
+                        <div class="description">Execute improvements with Lean365 tools, training, and comprehensive change management.</div>
+                    </div>
+                    <div class="activities-section">
+                        <div class="section-title">
+                            <span>Key Activities</span>
+                        </div>
+                        <ul class="activity-list">
+                            <li>Execute interventions</li>
+                            <li>Train staff on new processes</li>
+                            <li>Initiate daily huddles using Huddle Boards</li>
+                            <li>Leadership Rounding begins</li>
+                            <li>Track progress via Balanced Scorecard</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="phase-right">
+                    <div class="deliverables-section">
+                        <div class="section-title">
+                            <span>Key Deliverables</span>
+                        </div>
+                        <ul class="deliverable-list">
+                            <li>New processes deployed</li>
+                            <li>Staff trained and engaged</li>
+                            <li>Lean365 tools active</li>
+                            <li>Initial improvement data</li>
+                        </ul>
+                    </div>
+                    <div class="tools-highlight">
+                        <h3>Lean365 Tools</h3>
+                        <div class="tools-list">Huddle Boards, Rounding<br>Balanced Scorecard tracking</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Phase 5 - Performance Monitoring -->
+        <div class="slide" id="slide-7">
+            <div class="lean365-logo">
+                <img src="../../assets/images/logo.svg" alt="Lean365">
+            </div>
+            <div class="phase-detail">
+                <div class="phase-left">
+                    <div class="phase-info">
+                        <h2>Phase 5: Performance Monitoring</h2>
+                        <div class="duration">Month 5</div>
+                        <div class="description">Track results and fine-tune processes through PDCA cycles with continuous adjustment.</div>
+                    </div>
+                    <div class="activities-section">
+                        <div class="section-title">
+                            <span>Key Activities</span>
+                        </div>
+                        <ul class="activity-list">
+                            <li>Monitor performance via Balanced Scorecard</li>
+                            <li>Continue daily huddles</li>
+                            <li>PDCA problem-solving for issues</li>
+                            <li>Bi-weekly progress reviews</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="phase-right">
+                    <div class="deliverables-section">
+                        <div class="section-title">
+                            <span>Key Deliverables</span>
+                        </div>
+                        <ul class="deliverable-list">
+                            <li>Monthly performance reports</li>
+                            <li>PDCA adjustment logs</li>
+                            <li>Coaching sessions completed</li>
+                        </ul>
+                    </div>
+                    <div class="tools-highlight">
+                        <h3>Lean365 Tools</h3>
+                        <div class="tools-list">Full platform utilization<br>PDCA for continuous improvement</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Phase 6 - Sustainment & Closure -->
+        <div class="slide" id="slide-8">
+            <div class="lean365-logo">
+                <img src="../../assets/images/logo.svg" alt="Lean365">
+            </div>
+            <div class="phase-detail">
+                <div class="phase-left">
+                    <div class="phase-info">
+                        <h2>Phase 6: Sustainment & Closure</h2>
+                        <div class="duration">Month 6</div>
+                        <div class="description">Ensure lasting improvements and complete handover of Lean365 system to client team.</div>
+                    </div>
+                    <div class="activities-section">
+                        <div class="section-title">
+                            <span>Key Activities</span>
+                        </div>
+                        <ul class="activity-list">
+                            <li>Develop sustainability plan</li>
+                            <li>Finalize documentation in LeanFlow</li>
+                            <li>Transition Balanced Scorecard ownership</li>
+                            <li>Project close-out presentation</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="phase-right">
+                    <div class="deliverables-section">
+                        <div class="section-title">
+                            <span>Key Deliverables</span>
+                        </div>
+                        <ul class="deliverable-list">
+                            <li>Sustainability & governance plan</li>
+                            <li>Final project report</li>
+                            <li>Lean365 platform handoff</li>
+                            <li>Celebration of results</li>
+                        </ul>
+                    </div>
+                    <div class="tools-highlight">
+                        <h3>Lean365 Tools</h3>
+                        <div class="tools-list">Full platform ownership<br>Self-sustaining operations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Summary -->
+        <div class="slide" id="slide-9">
+            <div class="lean365-logo">
+                <img src="../../assets/images/logo.svg" alt="Lean365">
+            </div>
+            <div class="slide-header">
+                <h1 class="slide-title">Transformation Excellence</h1>
+                <p class="slide-subtitle">Proven methodology for sustainable results</p>
+            </div>
+            
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3>6-Month Journey</h3>
+                    <p>Comprehensive transformation from diagnostic through sustainable implementation with full Lean365 platform integration.</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Proven Results</h3>
+                    <p>Systematic approach with measurable outcomes, continuous monitoring, and built-in sustainability mechanisms.</p>
+                </div>
+                <div class="summary-highlight">
+                    <h2>Ready to Transform Your Organization?</h2>
+                    <p>Let's discuss how our 6-phase approach can deliver measurable results in your specific context</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" onclick="previousSlide()">‹</button>
+        <div class="slide-dots" id="slideDots"></div>
+        <div class="slide-counter" id="slideCounter">1 / 9</div>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">›</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 9;
+        
+        // Initialize presentation
+        document.addEventListener('DOMContentLoaded', function() {
+            createDots();
+            updateNavigation();
+            showKeyboardHint();
+            animateTimeline();
+        });
+        
+        function createDots() {
+            const dotsContainer = document.getElementById('slideDots');
+            for (let i = 1; i <= totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = i === 1 ? 'dot active' : 'dot';
+                dot.onclick = () => goToSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+        
+        function goToSlide(slideNumber) {
+            if (slideNumber < 1 || slideNumber > totalSlides) return;
+            
+            // Hide current slide
+            document.querySelector('.slide.active').classList.remove('active');
+            
+            // Show new slide
+            document.getElementById(`slide-${slideNumber}`).classList.add('active');
+            
+            currentSlide = slideNumber;
+            updateNavigation();
+            
+            // Animate timeline if on overview slide
+            if (slideNumber === 2) {
+                setTimeout(animateTimeline, 300);
+            }
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                goToSlide(currentSlide + 1);
+            }
+        }
+        
+        function previousSlide() {
+            if (currentSlide > 1) {
+                goToSlide(currentSlide - 1);
+            }
+        }
+        
+        function updateNavigation() {
+            // Update counter
+            document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlide === 1;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+            
+            // Update dots
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index + 1 === currentSlide);
+            });
+        }
+        
+        function animateTimeline() {
+            const progressBar = document.getElementById('timelineProgress');
+            const dots = document.querySelectorAll('.timeline-dot');
+            
+            // Reset
+            progressBar.style.width = '0%';
+            dots.forEach(dot => dot.classList.remove('active', 'completed'));
+            
+            // Animate
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+                dots.forEach((dot, index) => {
+                    setTimeout(() => {
+                        if (index === 0) {
+                            dot.classList.add('active');
+                        } else {
+                            dots[index - 1].classList.remove('active');
+                            dots[index - 1].classList.add('completed');
+                            dot.classList.add('active');
+                        }
+                        
+                        if (index === dots.length - 1) {
+                            setTimeout(() => {
+                                dot.classList.remove('active');
+                                dot.classList.add('completed');
+                            }, 500);
+                        }
+                    }, index * 300);
+                });
+            }, 100);
+        }
+        
+        function showKeyboardHint() {
+            const hint = document.getElementById('keyboardHint');
+            hint.classList.add('show');
+            setTimeout(() => {
+                hint.classList.remove('show');
+            }, 3000);
+        }
+        
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            switch(e.key) {
+                case 'ArrowLeft':
+                    previousSlide();
+                    break;
+                case 'ArrowRight':
+                case ' ':
+                    nextSlide();
+                    break;
+                case 'Home':
+                    goToSlide(1);
+                    break;
+                case 'End':
+                    goToSlide(totalSlides);
+                    break;
+                case 'f':
+                case 'F':
+                    toggleFullscreen();
+                    break;
+                case 'Escape':
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    }
+                    break;
+            }
+        });
+        
+        // Prevent spacebar from scrolling
+        document.addEventListener('keydown', function(e) {
+            if (e.key === ' ') {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

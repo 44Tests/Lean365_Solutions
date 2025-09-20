@@ -1,20 +1,23 @@
 /* Flow-State Framework Website - Professional CSS */
 
-/* CSS Variables for Brand Colors */
+/* CSS Variables for Minimalist Design */
 :root {
   --lean-blue: #2557a7;
   --lean-blue-dark: #1a3f7a;
   --lean-blue-light: #4a75c9;
-  --lean-gray-dark: #404040;
-  --lean-gray-medium: #808080;
-  --lean-gray-light: #f5f5f5;
+  --lean-gray-dark: #111827;
+  --lean-gray-medium: #6b7280;
+  --lean-gray-light: #f9fafb;
   --white: #ffffff;
-  --success-green: #28a745;
-  --warning-orange: #fd7e14;
+  --success-green: #10b981;
+  --warning-orange: #f59e0b;
+  --neutral-100: #f3f4f6;
+  --neutral-200: #e5e7eb;
+  --neutral-300: #d1d5db;
   
   /* Typography */
-  --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  --font-secondary: 'Arial', sans-serif;
+  --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-secondary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   
   /* Spacing */
   --spacing-xs: 0.5rem;
@@ -24,10 +27,10 @@
   --spacing-xl: 3rem;
   --spacing-xxl: 4rem;
   
-  /* Shadows */
-  --shadow-soft: 0 2px 10px rgba(0,0,0,0.1);
-  --shadow-medium: 0 4px 20px rgba(0,0,0,0.15);
-  --shadow-strong: 0 8px 30px rgba(0,0,0,0.2);
+  /* Shadows - Minimalist */
+  --shadow-soft: 0 1px 3px rgba(0,0,0,0.05);
+  --shadow-medium: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow-strong: 0 8px 25px rgba(0,0,0,0.15);
 }
 
 /* Reset and Base Styles */
@@ -44,8 +47,11 @@ html {
 body {
   font-family: var(--font-primary);
   color: var(--lean-gray-dark);
-  line-height: 1.6;
+  line-height: 1.7;
   font-size: 16px;
+  font-weight: 400;
+  letter-spacing: -0.011em;
+  background: var(--white);
 }
 
 /* Typography Hierarchy */
@@ -174,9 +180,12 @@ a:hover {
 }
 
 .hero .subtitle {
-  font-size: 1.5rem;
-  margin-bottom: var(--spacing-xl);
-  opacity: 0.9;
+  font-size: 1.3rem;
+  margin-bottom: 0;
+  opacity: 0.95;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 .hero-stats {
@@ -259,16 +268,16 @@ a:hover {
 
 .framework-stage {
   background-color: var(--white);
-  padding: var(--spacing-lg);
+  padding: 2rem;
   border-radius: 12px;
-  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--neutral-200);
   text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .framework-stage:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-medium);
+  border-color: var(--neutral-300);
+  box-shadow: var(--shadow-soft);
 }
 
 .stage-icon {
@@ -427,6 +436,138 @@ a:hover {
   color: var(--lean-gray-medium);
 }
 
+/* Solutions Grid - Active Projects Style - Updated */
+.solutions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.solution-card {
+  background: #ffffff !important;
+  border: 2px solid #e5e7eb !important;
+  border-radius: 12px;
+  padding: 0;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+  margin-bottom: 1rem;
+}
+
+.solution-card:hover {
+  border-color: var(--neutral-300);
+  box-shadow: var(--shadow-medium);
+}
+
+.solution-header {
+  padding: 1.5rem 1.5rem 0;
+  margin-bottom: 0;
+}
+
+.solution-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--lean-gray-dark);
+  margin-bottom: 0.5rem;
+}
+
+.solution-subtitle {
+  color: var(--lean-gray-medium);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.solution-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.solution-description {
+  color: var(--lean-gray-dark);
+  line-height: 1.5;
+  font-size: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.solution-meta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  padding: 1.25rem 0;
+  margin: 1.25rem 0;
+  border-top: 1px solid var(--neutral-200);
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.meta-label {
+  font-size: 0.75rem;
+  color: var(--lean-gray-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.meta-value {
+  font-size: 0.875rem;
+  color: var(--lean-gray-dark);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.solution-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--neutral-200);
+  align-items: flex-start;
+}
+
+.action-link {
+  font-size: 0.875rem;
+  color: var(--lean-gray-medium);
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--neutral-200);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  text-align: center;
+  min-width: 140px;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.action-link:hover {
+  color: var(--lean-gray-dark);
+  border-color: var(--neutral-300);
+  background: var(--neutral-100);
+  text-decoration: none;
+}
+
+.action-link.action-primary {
+  background: var(--lean-blue);
+  color: var(--white);
+  border-color: var(--lean-blue);
+}
+
+.action-link.action-primary:hover {
+  background: var(--lean-blue-dark);
+  border-color: var(--lean-blue-dark);
+  color: var(--white);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .container {
@@ -461,6 +602,24 @@ a:hover {
   
   .case-studies-grid {
     grid-template-columns: 1fr;
+  }
+  
+  .solutions-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .solution-card {
+    padding: 1.5rem;
+  }
+  
+  .solution-header {
+    gap: 0.75rem;
+  }
+  
+  .solution-icon {
+    width: 40px;
+    height: 40px;
   }
 }
 
