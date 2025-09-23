@@ -4,7 +4,7 @@ A professional, conversion-optimized website for the Flow-State Framework method
 
 ## 🎯 Overview
 
-This website positions Lean365 as the go-to authority for strategic execution transformation. Built following world-class consulting website best practices, it transforms strategic intent into organizational instinct through the Flow-State Framework.
+This website positions Lean365 as the go-to authority for strategic execution transformation. Built following world-class operational excellence website best practices, it transforms strategic intent into organizational instinct through the Flow-State Framework.
 
 ## 🏗️ Website Structure
 
@@ -225,7 +225,7 @@ lean365-website/
 ## 🎯 Success Metrics
 
 ### Engagement Targets
-- **Conversion Rate**: 15-25% (industry-leading for consulting)
+- **Conversion Rate**: 15-25% (industry-leading for OpEx services)
 - **Page Load Speed**: <3 seconds
 - **Mobile Traffic**: 60%+ of total visits
 - **Assessment Completion**: 40%+ of visitors
@@ -238,4 +238,4 @@ lean365-website/
 
 ---
 
-**Built with expertise in consulting website best practices to drive strategic transformation conversations and qualified leads.**
+**Built with expertise in operational excellence website best practices to drive strategic transformation conversations and qualified leads.**

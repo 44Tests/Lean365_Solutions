@@ -7,7 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This repository contains **Lean365 Solutions**, a comprehensive strategic execution and organizational transformation platform built around the **Flow-State Framework**. The project consists of three main solution areas:
 
 1. **Flow-State Framework** - A 4-stage methodology for transforming strategic intent into organizational instinct
-2. **Consulting Services** - Expert guidance, assessments, and consulting resources
+2. **OpEx Services** - Expert guidance, assessments, and operational excellence resources
 3. **Lean365 Platform** - AI-powered technology platform with 5 integrated modules
 
 The repository is structured as a static website with HTML/CSS/JS frontend, comprehensive documentation, and business presentation materials.
@@ -17,10 +17,12 @@ The repository is structured as a static website with HTML/CSS/JS frontend, comp
 ```
 Lean365_Solutions/
 ├── index.html                          # Main homepage hub for all solutions
+├── README.md                           # Comprehensive project documentation
 ├── assets/
 │   ├── css/style.css                   # Professional design system with CSS variables
 │   ├── js/main.js                      # Interactive functionality (animations, forms)
-│   └── images/                         # Lean365 logos, icons, and assets
+│   ├── images/                         # Lean365 logos, icons, and assets
+│   └── downloads/                      # Downloadable resources (whitepapers, etc.)
 ├── FSF/                                # Flow-State Framework section
 │   ├── FSF_Framework.html              # Framework methodology details
 │   ├── FSF_Casestudies.html           # Industry success stories
@@ -31,10 +33,14 @@ Lean365_Solutions/
 │   │   │   ├── Lean365_Overview.md     # Platform overview
 │   │   │   └── Lean365_*.md           # Individual module documentation
 │   │   └── images/                     # Framework icons and visual assets
-│   └── CLAUDE.md                       # FSF-specific guidance (exists)
+│   └── CLAUDE.md                       # FSF-specific guidance
 ├── Consulting/
-│   ├── resources.html                  # Consulting resources and tools
+│   ├── resources.html                  # OpEx Services resources and tools
+│   ├── projects.html                   # Project portfolio page
 │   └── Projects/                       # Client project templates and examples
+│       ├── Lean365_Project_Template.md
+│       ├── Our_Approach_Presentation.html
+│       └── [Client folders with proposals/plans]
 └── Lean365_Platform/
     └── platform.html                   # Platform technology details
 ```
@@ -43,11 +49,12 @@ Lean365_Solutions/
 
 This is a **static website project** with no build process:
 
-- **Preview**: Open `index.html` in a web browser
-- **Local Development**: Serve from a local web server for best experience
+- **Preview**: Open `Lean365_Solutions/index.html` in a web browser
+- **Local Development**: Serve from a local web server for best experience (e.g., `python3 -m http.server 8000` or `npx serve`)
 - **No Build Tools**: Direct file editing and browser refresh workflow
 - **No Package Manager**: No npm, yarn, or similar dependencies
-- **No Testing Framework**: Manual testing in browsers
+- **No Testing Framework**: Manual testing in browsers across different devices
+- **Content Updates**: Edit HTML files directly or update markdown documentation in respective `/docs` folders
 
 ## Architecture Overview
 
@@ -65,10 +72,12 @@ This is a **static website project** with no build process:
 - **Static Assets**: SVG icons, images, and downloadable resources
 
 ### Key Technical Features
-- **Smooth Scrolling**: Anchor link navigation with offset calculations
-- **Intersection Observer**: Fade-in animations on scroll
+- **Smooth Scrolling**: Anchor link navigation with header offset calculations (`main.js:3-24`)
+- **Intersection Observer**: Fade-in animations on scroll with threshold detection (`main.js:26-42`)
 - **Form Handling**: Client-side validation for consultation forms
-- **Mobile Optimization**: Touch-friendly interactions and responsive breakpoints
+- **Mobile Optimization**: Touch-friendly interactions and responsive breakpoints (768px and below)
+- **CSS Variables**: Professional design system with consistent color palette and spacing (`style.css:4-34`)
+- **SVG Icons**: Scalable vector graphics for all framework module icons
 
 ## Content Standards and Messaging
 
@@ -112,10 +121,18 @@ This is a **static website project** with no build process:
 ## Important Context
 
 ### Business Focus
-This is a **legitimate business consulting and technology platform** focused on organizational transformation. All content should maintain professional standards and focus on helping organizations improve strategic execution.
+This is a **legitimate business operational excellence and technology platform** focused on organizational transformation. All content should maintain professional standards and focus on helping organizations improve strategic execution.
 
 ### Existing Documentation
-There is already a `FSF/CLAUDE.md` file specifically for the Flow-State Framework section. This root-level CLAUDE.md provides overall repository guidance, while the FSF-specific one covers framework details.
+- **Root CLAUDE.md**: This file provides overall repository guidance
+- **FSF/CLAUDE.md**: Specific guidance for Flow-State Framework section with presentation details
+- **README.md**: Comprehensive project documentation with business context and setup instructions
 
 ### No Build Pipeline
 Unlike typical web projects, this uses a direct edit-and-preview workflow. Changes to HTML/CSS/JS files are immediately visible when refreshing the browser.
+
+### Multi-Section Architecture
+The repository serves three distinct business areas through a hub-and-spoke navigation model:
+- **FSF Section**: Framework methodology and presentations (`FSF/`)
+- **OpEx Services Section**: Service offerings and project templates (`Consulting/`)
+- **Platform Section**: Technology capabilities and features (`Lean365_Platform/`)

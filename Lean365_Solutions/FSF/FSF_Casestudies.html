@@ -8,6 +8,344 @@
     <meta name="keywords" content="Flow-State Framework case studies, strategic execution results, healthcare transformation, manufacturing improvement, oil gas optimization, Lean365 success stories">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="icon" type="image/svg+xml" href="../assets/images/logo.svg">
+    <style>
+        /* Industry Filter Styling */
+        .industry-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--lean-blue);
+            background: white;
+            color: var(--lean-blue);
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--lean-blue);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        /* Results Dashboard */
+        .results-dashboard {
+            background: linear-gradient(135deg, var(--lean-blue) 0%, var(--lean-blue-dark) 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+        
+        .dashboard-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .dashboard-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .metric-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .metric-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--warning-orange);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+        
+        /* Interactive Case Study Cards */
+        .case-studies-interactive {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .case-study-card-new {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-soft);
+            transition: all 0.3s ease;
+            border: 1px solid var(--neutral-200);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .case-study-card-new:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-strong);
+            border-color: var(--lean-blue);
+        }
+        
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .industry-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .industry-badge.healthcare {
+            background: #e74c3c;
+        }
+        
+        .industry-badge.manufacturing {
+            background: #f39c12;
+        }
+        
+        .industry-badge.energy {
+            background: #27ae60;
+        }
+        
+        .case-icon {
+            font-size: 2rem;
+        }
+        
+        .case-study-card-new h3 {
+            color: var(--lean-gray-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+        
+        .case-subtitle {
+            color: var(--lean-gray-medium);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .case-challenge {
+            background: var(--neutral-100);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .case-challenge h4 {
+            color: var(--lean-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .case-challenge p {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .case-results-preview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .result-item {
+            text-align: center;
+            padding: 1rem 0.4rem;
+            background: var(--lean-gray-light);
+            border-radius: 12px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--neutral-200);
+            transition: all 0.3s ease;
+            overflow: visible;
+        }
+        
+        .result-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-soft);
+            border-color: var(--lean-blue);
+        }
+        
+        .result-value {
+            display: block;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--success-green);
+            margin-bottom: 0.3rem;
+            line-height: 1.1;
+            white-space: nowrap;
+        }
+        
+        .result-label {
+            font-size: 0.7rem;
+            color: var(--lean-gray-medium);
+            line-height: 1.2;
+            font-weight: 500;
+            text-align: center;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+        
+        .case-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .case-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .case-btn.primary {
+            background: var(--lean-blue);
+            color: white;
+        }
+        
+        .case-btn.primary:hover {
+            background: var(--lean-blue-dark);
+            transform: translateY(-2px);
+        }
+        
+        .case-btn.secondary {
+            background: white;
+            color: var(--lean-blue);
+            border: 2px solid var(--lean-blue);
+        }
+        
+        .case-btn.secondary:hover {
+            background: var(--lean-blue);
+            color: white;
+        }
+        
+        /* Hide/Show functionality for industry filter */
+        .case-study-card-new.hidden {
+            display: none;
+        }
+        
+        /* Enhanced Results Sections */
+        .case-study-results-enhanced {
+            background: var(--lean-gray-light);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .results-header h3 {
+            color: var(--lean-blue);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .case-study-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .result-metric {
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.3s ease;
+        }
+        
+        .result-metric:hover {
+            transform: translateY(-4px);
+        }
+        
+        .result-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--success-green);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .industry-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .filter-btn {
+                width: 200px;
+            }
+            
+            .dashboard-metrics {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .case-studies-interactive {
+                grid-template-columns: 1fr;
+            }
+            
+            .case-results-preview {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .result-item {
+                min-height: 70px;
+                padding: 0.8rem 0.3rem;
+            }
+            
+            .case-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -23,7 +361,6 @@
                     <li><a href="../Lean365_Platform/platform.html">Platform</a></li>
                     <li><a href="#case-studies">Results</a></li>
                     <li><a href="../Consulting/resources.html">Resources</a></li>
-                    <li><a href="../index.html#consultation" class="btn btn-primary">Schedule Consultation</a></li>
                 </ul>
             </nav>
         </div>
@@ -67,48 +404,125 @@
         </div>
     </section>
 
-    <!-- Case Studies Overview -->
+    <!-- Industry Filter Navigation -->
     <section class="section" id="case-studies">
         <div class="container">
             <div class="text-center mb-xl">
                 <h2 class="fade-in">Real Organizations, Real Results</h2>
-                <p class="fade-in" style="font-size: 1.2rem; max-width: 800px; margin: 0 auto;">Each implementation demonstrates how the Flow-State Framework creates sustainable transformation by building strategic muscle memory, not just compliance.</p>
+                <p class="fade-in" style="font-size: 1.2rem; max-width: 800px; margin: 0 auto;">Proven transformation across industries with measurable ROI and sustainable results</p>
             </div>
             
-            <div class="case-studies-grid">
-                <div class="case-study-card fade-in">
-                    <div class="case-study-header">
-                        <h3>Regional Hospital System</h3>
-                        <p>400-bed healthcare system • 2,500 employees</p>
+            <!-- Industry Filter Buttons -->
+            <div class="text-center">
+                <div class="industry-filters fade-in">
+                    <button class="filter-btn active" onclick="filterIndustry('all')">All Industries</button>
+                    <button class="filter-btn" onclick="filterIndustry('healthcare')">Healthcare</button>
+                    <button class="filter-btn" onclick="filterIndustry('manufacturing')">Manufacturing</button>
+                    <button class="filter-btn" onclick="filterIndustry('energy')">Oil & Gas</button>
+                </div>
+            </div>
+            
+            <!-- Interactive Case Study Cards -->
+            <div class="case-studies-interactive">
+                <div class="case-study-card-new fade-in" data-industry="healthcare">
+                    <div class="case-header">
+                        <div class="industry-badge healthcare">Healthcare</div>
+                        <div class="case-icon">🏥</div>
                     </div>
-                    <div class="case-study-body">
-                        <p><strong>Challenge:</strong> Patient satisfaction, staff turnover, operational efficiency</p>
-                        <p><strong>Solution:</strong> 4-stage Flow-State implementation with strategic cascade</p>
-                        <a href="#healthcare" class="btn btn-secondary">View Full Case Study</a>
+                    <h3>Regional Hospital System</h3>
+                    <p class="case-subtitle">400-bed system • 2,500 employees</p>
+                    
+                    <div class="case-challenge">
+                        <h4>Challenge</h4>
+                        <p>80th percentile patient satisfaction, 18% staff turnover, operational inefficiencies</p>
+                    </div>
+                    
+                    <div class="case-results-preview">
+                        <div class="result-item">
+                            <span class="result-value">89th</span>
+                            <span class="result-label">Patient Satisfaction</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-value">14%</span>
+                            <span class="result-label">Staff Turnover</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-value">$2.1M</span>
+                            <span class="result-label">Cost Savings</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-actions">
+                        <button class="case-btn primary" onclick="showCaseDetails('healthcare')">View Full Story</button>
+                        <button class="case-btn secondary" onclick="showResults('healthcare')">Jump to Results</button>
                     </div>
                 </div>
                 
-                <div class="case-study-card fade-in">
-                    <div class="case-study-header">
-                        <h3>Precision Manufacturing</h3>
-                        <p>150-employee manufacturing company</p>
+                <div class="case-study-card-new fade-in" data-industry="manufacturing">
+                    <div class="case-header">
+                        <div class="industry-badge manufacturing">Manufacturing</div>
+                        <div class="case-icon">🏭</div>
                     </div>
-                    <div class="case-study-body">
-                        <p><strong>Challenge:</strong> Quality issues, waste reduction, customer responsiveness</p>
-                        <p><strong>Solution:</strong> Daily practice engine with AI-powered improvements</p>
-                        <a href="#manufacturing" class="btn btn-secondary">View Full Case Study</a>
+                    <h3>Precision Manufacturing</h3>
+                    <p class="case-subtitle">150 employees • High-precision components</p>
+                    
+                    <div class="case-challenge">
+                        <h4>Challenge</h4>
+                        <p>87% first-pass yield, 78% on-time delivery, improvement fatigue</p>
+                    </div>
+                    
+                    <div class="case-results-preview">
+                        <div class="result-item">
+                            <span class="result-value">96%</span>
+                            <span class="result-label">First-Pass Yield</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-value">94%</span>
+                            <span class="result-label">On-Time Delivery</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-value">$380K</span>
+                            <span class="result-label">Scrap Reduction</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-actions">
+                        <button class="case-btn primary" onclick="showCaseDetails('manufacturing')">View Full Story</button>
+                        <button class="case-btn secondary" onclick="showResults('manufacturing')">Jump to Results</button>
                     </div>
                 </div>
                 
-                <div class="case-study-card fade-in">
-                    <div class="case-study-header">
-                        <h3>Oil & Gas Operations</h3>
-                        <p>Mid-size upstream operator • 12 drilling locations</p>
+                <div class="case-study-card-new fade-in" data-industry="energy">
+                    <div class="case-header">
+                        <div class="industry-badge energy">Oil & Gas</div>
+                        <div class="case-icon">🛢️</div>
                     </div>
-                    <div class="case-study-body">
-                        <p><strong>Challenge:</strong> Safety incidents, production variability, cost overruns</p>
-                        <p><strong>Solution:</strong> Enterprise-wide strategic alignment with leadership engagement</p>
-                        <a href="#oilgas" class="btn btn-secondary">View Full Case Study</a>
+                    <h3>Upstream Operations</h3>
+                    <p class="case-subtitle">12 drilling locations • Mid-size operator</p>
+                    
+                    <div class="case-challenge">
+                        <h4>Challenge</h4>
+                        <p>2.1 safety incidents per 200K hours, 82% well uptime, siloed operations</p>
+                    </div>
+                    
+                    <div class="case-results-preview">
+                        <div class="result-item">
+                            <span class="result-value">85%</span>
+                            <span class="result-label">Safety Improvement</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-value">91%</span>
+                            <span class="result-label">Well Uptime</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-value">$4.2M</span>
+                            <span class="result-label">Annual Savings</span>
+                        </div>
+                    </div>
+                    
+                    <div class="case-actions">
+                        <button class="case-btn primary" onclick="showCaseDetails('energy')">View Full Story</button>
+                        <button class="case-btn secondary" onclick="showResults('energy')">Jump to Results</button>
                     </div>
                 </div>
             </div>
@@ -126,7 +540,7 @@
             
             <div style="background: white; padding: 3rem; border-radius: 12px; margin-bottom: 3rem;" class="fade-in">
                 <h3 style="color: var(--lean-blue); margin-bottom: 2rem;">The Challenge</h3>
-                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">A 400-bed regional hospital system was struggling with patient satisfaction scores stuck in the 65th percentile, staff turnover approaching 23%, and operational inefficiencies that impacted both quality and financial performance. Despite clear strategic priorities around patient experience, financial performance, and staff engagement, frontline teams couldn't connect their daily work to these goals.</p>
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">A 400-bed regional hospital system was struggling with patient satisfaction scores stuck in the 80th percentile, staff turnover approaching 18%, and operational inefficiencies that impacted both quality and financial performance. Despite clear strategic priorities around patient experience, financial performance, and staff engagement, frontline teams couldn't connect their daily work to these goals.</p>
                 
                 <h4 style="color: var(--lean-gray-dark); margin: 2rem 0 1rem;">Specific Pain Points:</h4>
                 <ul style="padding-left: 2rem; line-height: 1.8;">
@@ -168,12 +582,12 @@
                 <h3 style="color: var(--lean-blue); text-align: center; margin-bottom: 2rem;">Results After 12 Months</h3>
                 <div class="case-study-results" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
                     <div class="result-metric" style="background: white; padding: 2rem; border-radius: 8px; text-align: center;">
-                        <div class="result-value" style="font-size: 2rem; font-weight: 700; color: var(--success-green);">65th → 88th</div>
+                        <div class="result-value" style="font-size: 2rem; font-weight: 700; color: var(--success-green);">80th → 89th</div>
                         <div style="font-weight: 600; margin-top: 0.5rem;">Patient Satisfaction Percentile</div>
                         <p style="margin-top: 1rem; font-size: 0.9rem;">Sustained improvement across all units with consistent practices</p>
                     </div>
                     <div class="result-metric" style="background: white; padding: 2rem; border-radius: 8px; text-align: center;">
-                        <div class="result-value" style="font-size: 2rem; font-weight: 700; color: var(--success-green);">23% → 14%</div>
+                        <div class="result-value" style="font-size: 2rem; font-weight: 700; color: var(--success-green);">18% → 14%</div>
                         <div style="font-weight: 600; margin-top: 0.5rem;">Staff Turnover Reduction</div>
                         <p style="margin-top: 1rem; font-size: 0.9rem;">Engaged employees staying longer with clear career paths</p>
                     </div>
@@ -558,5 +972,79 @@
     </footer>
 
     <script src="../assets/js/main.js"></script>
+    <script>
+        // Industry Filter Functionality
+        function filterIndustry(industry) {
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Show/hide case study cards
+            document.querySelectorAll('.case-study-card-new').forEach(card => {
+                if (industry === 'all') {
+                    card.classList.remove('hidden');
+                } else {
+                    const cardIndustry = card.getAttribute('data-industry');
+                    if (cardIndustry === industry) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                }
+            });
+        }
+        
+        // Show Case Details
+        function showCaseDetails(caseType) {
+            const sectionId = caseType === 'energy' ? 'oilgas' : caseType;
+            document.getElementById(sectionId).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+        
+        // Jump to Results
+        function showResults(caseType) {
+            const sectionId = caseType === 'energy' ? 'oilgas' : caseType;
+            const section = document.getElementById(sectionId);
+            const resultsDiv = section.querySelector('.case-study-results');
+            if (resultsDiv) {
+                resultsDiv.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            } else {
+                showCaseDetails(caseType);
+            }
+        }
+        
+        // Enhanced animations for metric cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe metric cards for animations
+            const metricCards = document.querySelectorAll('.metric-card, .case-study-card-new');
+            metricCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
 </body>
 </html>
